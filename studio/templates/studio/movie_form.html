@@ -1,0 +1,48 @@
+
+{% extends "studio/base.html" %}
+
+{% block title %}Добавить фильм{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>Добавление нового фильма</h2>
+
+    <p>Заполните информацию о фильме.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="error">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-field">
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {% if field.errors %}
+                    <div class="error">
+                        {{ field.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button class="button" type="submit">
+            Сохранить фильм
+        </button>
+
+        <a class="button" href="{% url 'movie_list' %}">
+            Отмена
+        </a>
+    </form>
+</div>
+
+{% endblock %}

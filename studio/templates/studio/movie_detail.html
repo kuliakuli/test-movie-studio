@@ -1,0 +1,55 @@
+
+{% extends "studio/base.html" %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <h2>{{ movie.title }}</h2>
+
+    <p><strong>Год выпуска:</strong> {{ movie.year }}</p>
+    <p><strong>Жанр:</strong> {{ movie.genre }}</p>
+    <p><strong>Бюджет:</strong> {{ movie.budget|floatformat:2 }}</p>
+    <p><strong>Режиссёр:</strong> {{ movie.director.full_name }}</p>
+
+    <h3>Описание</h3>
+    <p>{{ movie.description }}</p>
+</div>
+
+<div class="card">
+    <h2>Актёры и роли</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Актёр</th>
+                <th>Персонаж</th>
+                <th>Гражданство</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for role in roles %}
+            <tr>
+                <td>{{ role.actor.full_name }}</td>
+                <td>{{ role.role_name }}</td>
+                <td>{{ role.actor.citizenship }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="3">
+                    Актёры пока не указаны.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<a class="button" href="{% url 'movie_list' %}">
+    Назад к фильмам
+</a>
+
+{% endblock %}
